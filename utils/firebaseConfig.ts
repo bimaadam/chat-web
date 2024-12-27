@@ -5,24 +5,24 @@ import { getFirestore } from "firebase/firestore";
 import { getAnalytics, isSupported } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD7fIQG8JDaTF8uOlRkA97eBfFuc1DXU3s",
-  authDomain: "web-chat-81227.firebaseapp.com",
-  projectId: "web-chat-81227",
-  storageBucket: "web-chat-81227.appspot.com",
-  messagingSenderId: "458417519791",
-  appId: "1:458417519791:web:795220e2f9a3c1c893e85a",
-  measurementId: "G-B38QLP9VQK",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
-// Inisialisasi Firebase hanya jika belum ada
+// Initialize Firebase only if it hasn't been initialized yet
 let app: FirebaseApp;
 if (!getApps().length) {
   app = initializeApp(firebaseConfig);
 } else {
-  app = getApp(); // Ambil aplikasi yang sudah ada
+  app = getApp(); // Get the existing app
 }
 
-// Inisialisasi Analytics hanya di sisi klien
+// Initialize Analytics only on the client side
 let analytics;
 if (typeof window !== "undefined") {
   analytics = isSupported().then(() => getAnalytics(app));
@@ -30,4 +30,4 @@ if (typeof window !== "undefined") {
 
 export const auth = getAuth(app);
 export const firestore = getFirestore(app);
-export { analytics }; // Ekspor analytics jika diperlukan
+export { analytics }; // Export analytics if needed
